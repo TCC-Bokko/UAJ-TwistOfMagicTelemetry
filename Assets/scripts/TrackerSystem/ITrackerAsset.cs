@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ITrackerAsset : MonoBehaviour
 {
+    //CLASE ABSTRACTA DE TRACKERS CON LA CUAL IMPLEMENTAR:
+    //subTracker trackerNivel
+    //subTracker trackerJugador
+    //subTracker trackerGeneral
+
     // Start is called before the first frame update
     void Start()
     {
