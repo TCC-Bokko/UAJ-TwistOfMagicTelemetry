@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrackerEvent : MonoBehaviour
+public class EventCheckpoint : TrackerEvent
 {
-    // Clase Abstracta
-    // Define variables y métodos compartidos por todos los eventos.
-    // Se utiliza como clase padre para implementar todos los eventos descritos en el documento de diseño. 
+    // Evento invocado por LevelTracker
 
     // Start is called before the first frame update
     void Start()
