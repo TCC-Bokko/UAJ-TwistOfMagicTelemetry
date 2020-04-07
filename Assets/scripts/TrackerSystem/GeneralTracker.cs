@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ITrackerAsset : MonoBehaviour
+public class GeneralTracker : ITrackerAsset
 {
-    //CLASE ABSTRACTA DE TRACKERS CON LA CUAL IMPLEMENTAR:
-    //subTracker levelTracker
-    //subTracker playerTracker
-    //subTracker generalTracker
-
-    //TO DO
+    // Tracker que gestiona eventos generales (Ver documento diseño)
+    // Diseñado para ser colocado como script del objeto a trackear y que lance eventos del tipo propio cuando sea necesario
 
     // Start is called before the first frame update
     void Start()
