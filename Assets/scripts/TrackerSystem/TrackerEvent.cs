@@ -50,6 +50,13 @@ public class TrackerEvent
         return this.session;
     }
 
+    public virtual string SerializeToCSV()
+    {
+        return time.ToString() + "," + session.ToString() + "," + eventType.ToString();
+    }
+
+
+
 
     //serialize to csv & to json or xml or something
 }

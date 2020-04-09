@@ -14,4 +14,9 @@ public class EventLevelCompleted : TrackerEvent
         this.level = nivel;
     }
 
+    public string SerializeToCSV()
+    {
+        return base.SerializeToCSV() + ", " + level.ToString();
+
+    }
 }

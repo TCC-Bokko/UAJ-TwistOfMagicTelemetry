@@ -7,9 +7,10 @@ class EventSesionStart : TrackerEvent
 {                                                //No se como llamar a session
     public EventSesionStart() :base(DateTime.Now, 1, EventType.SESSION_START)
     {
-       
-    
     }
+      
+
+    
 }
 
 

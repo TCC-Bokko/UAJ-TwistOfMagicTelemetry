@@ -14,7 +14,12 @@ public class EventPlayerDead : TrackerEvent
         posY = y;
         causeOf = cause;
     }
+    //Ovverride?
+    public string SerializeToCSV()
+    {
+        return base.SerializeToCSV() + ", " + posX.ToString() + "," + posY.ToString() + "," + causeOf.ToString();
 
+    }
 
 
 }

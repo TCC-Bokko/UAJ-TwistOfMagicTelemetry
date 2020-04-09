@@ -12,6 +12,10 @@ public class EventCheckpoint : TrackerEvent
     {
         idCheckpoint = n;
     }
+    //Añadir override???
+    public string SerializeToCSV()
+    {
+        return base.SerializeToCSV() + ", " + idCheckpoint.ToString();
 
-
+    }
 }

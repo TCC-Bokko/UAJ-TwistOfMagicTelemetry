@@ -10,5 +10,10 @@ public class EventLevelStart : TrackerEvent
     public EventLevelStart(int nivel):base(DateTime.Now, 1, EventType.LEVEL_START){
         this.level = nivel;
     }
+    public string SerializeToCSV()
+    {
+        return base.SerializeToCSV() + ", " + this.level.ToString(); ;
+
+    }
 
 }
