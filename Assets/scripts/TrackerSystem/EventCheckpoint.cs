@@ -1,20 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EventCheckpoint : TrackerEvent
 {
+    int nM;
     // Evento invocado por LevelTracker
-
-    // Start is called before the first frame update
-    void Start()
+    protected int idCheckpoint;
+    public EventCheckpoint(int n) : base(DateTime.Now, 1, EventType.CHECKPOINT)
     {
-        
+        idCheckpoint = n;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

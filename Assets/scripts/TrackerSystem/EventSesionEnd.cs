@@ -1,20 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class EventSesionEnd : TrackerEvent
 {
     // Evento invocado por GeneralTracker
 
-    // Start is called before the first frame update
-    void Start()
+    public EventSesionEnd() : base(DateTime.Now, 1, EventType.SESSION_END)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
     }
 }
+

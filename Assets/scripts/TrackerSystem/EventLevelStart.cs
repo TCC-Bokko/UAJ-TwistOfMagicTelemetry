@@ -1,20 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class EventLevelStart : TrackerEvent
 {
     // Evento invocado por LevelTracker
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    protected int level;
+    public EventLevelStart(int nivel):base(DateTime.Now, 1, EventType.LEVEL_START){
+        this.level = nivel;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
