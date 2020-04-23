@@ -18,4 +18,23 @@ public class PlayerTracker : ITrackerAsset
     {
         
     }
+
+    public new bool checkValidity(TrackerEvent t_event)
+    {
+        bool isValid = false;
+        TrackerEvent.EventType t_eventType = t_event.getType();
+
+        if (t_eventType == TrackerEvent.EventType.DEAD)
+            isValid = true;
+        if (t_eventType == TrackerEvent.EventType.IDLE_MANA1)
+            isValid = true;
+        if (t_eventType == TrackerEvent.EventType.IDLE_MANA2)
+            isValid = true;
+        if (t_eventType == TrackerEvent.EventType.IDLE_MANA3)
+            isValid = true;
+        if (t_eventType == TrackerEvent.EventType.IDLE_MANA4)
+            isValid = true;
+
+        return isValid;
+    }
 }

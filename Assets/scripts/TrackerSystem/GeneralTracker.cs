@@ -18,4 +18,17 @@ public class GeneralTracker : ITrackerAsset
     {
         
     }
+
+    public new bool checkValidity(TrackerEvent t_event)
+    {
+        bool isValid = false;
+        TrackerEvent.EventType t_eventType = t_event.getType();
+
+        if (t_eventType == TrackerEvent.EventType.SESSION_START)
+            isValid = true;
+        if (t_eventType == TrackerEvent.EventType.SESSION_END)
+            isValid = true;
+
+        return isValid;
+    }
 }

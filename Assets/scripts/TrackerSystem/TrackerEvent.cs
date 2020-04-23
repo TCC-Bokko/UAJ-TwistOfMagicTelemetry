@@ -28,8 +28,6 @@ public class TrackerEvent
         BY_MANA,
         NORMAL//Por Enemigo, por aplastamiento, por ahogamiento
     }
-
-
    
     protected DateTime time;
     protected long session;
@@ -55,7 +53,9 @@ public class TrackerEvent
         return time.ToString() + "," + session.ToString() + "," + eventType.ToString();
     }
 
-
+    public EventType getType() {
+        return this.eventType;
+    }
 
 
     //serialize to csv & to json or xml or something

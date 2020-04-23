@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Tracker : MonoBehaviour
 {
-    public enum EventTypes { SesionStart, SesionEnd, PlayerDead, LevelStart, LevelEnd, IdleMana1, IdleMana2, Checkpoint };
-
     // VARIABLES ///////////////////////////////////////////////////////////////////////
     // Proceso del singleton
     public static Tracker instance;
@@ -21,6 +19,9 @@ public class Tracker : MonoBehaviour
     //Tracker trackerGeneral
 
     // Lista de eventos
+    // en esta implementación pasamos todos los eventos validos a la misma lista
+    // sin embargo sería muy facil dividirlos por cada tracker (general, jugador y nivel) 
+    // en el momento de validarlos.
     private List<TrackerEvent> eventList;
     int eventsInQueue = 0;
 
@@ -37,7 +38,6 @@ public class Tracker : MonoBehaviour
     {
         // Genera el singleton.
         instance = this;
-
 
         // Enlazado de otras clases segun tipo
         persistenceObject = new IPersistence();
