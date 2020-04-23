@@ -10,6 +10,14 @@ public class ITrackerAsset1 : MonoBehaviour
     //subTracker generalTracker
 
     //TO DO
+    public bool accept() {
+        bool isValid = false;
 
+        
+
+        return isValid;
+    }
+
+    public abstract bool checkValidity() { };
    
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ISerializer : MonoBehaviour
+public class JSONSerializer : ISerializer
 {
     // Start is called before the first frame update
     void Start()
@@ -14,9 +14,5 @@ public class ISerializer : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void serialize(TrackerEvent t_event) {
-        //Guardar las cosas del evento
     }
 }

@@ -9,17 +9,14 @@ public class ITrackerAsset : MonoBehaviour
     //subTracker playerTracker
     //subTracker generalTracker
 
-    //TO DO
-
-    // Start is called before the first frame update
-    void Start()
+    public bool accept(TrackerEvent t_event)
     {
-        
+        bool isValid = false;
+        isValid = checkValidity(t_event);
+        return isValid;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public bool checkValidity(TrackerEvent t_event) {
+        return true;
     }
 }

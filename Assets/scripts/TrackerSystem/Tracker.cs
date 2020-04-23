@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Tracker : MonoBehaviour
 {
+    public enum EventTypes { SesionStart, SesionEnd, PlayerDead, LevelStart, LevelEnd, IdleMana1, IdleMana2, Checkpoint };
+
     // VARIABLES ///////////////////////////////////////////////////////////////////////
     // Proceso del singleton
     public static Tracker instance;
@@ -13,9 +15,15 @@ public class Tracker : MonoBehaviour
 
     // Lista de trackers activos (progression, resource, etc.)
     private List<ITrackerAsset> activeTrackers;
+    //Aqui dentro irán:
     //Tracker trackerNivel
     //Tracker trackerJugador
     //Tracker trackerGeneral
+
+    // Lista de eventos
+    private List<TrackerEvent> eventList;
+    int eventsInQueue = 0;
+
 
     // METODOS ///////////////////////////////////////////////////////////////////////
     //Para que no se destruya entre escenas
@@ -30,25 +38,39 @@ public class Tracker : MonoBehaviour
         // Genera el singleton.
         instance = this;
 
-        // Enviar eventos de inicio de sesión junto con parámetros
-        // que pueden aportar especificaciones adicionales: plataforma, SO, país, información
-        // demográfica(fecha de nacimiento, sexo, id de alguna red social. . . ).
 
-        // TO DO
-        // Enlazado de otras clases segun tipo (ItrackerAsset, IPersistence) ?
-        
+        // Enlazado de otras clases segun tipo
+        persistenceObject = new IPersistence();
         // Llenar lista de trackers
-
+        ITrackerAsset trackerNivel = new LevelTracker();
+        activeTrackers.Add(trackerNivel);
+        ITrackerAsset trackerJugador = new PlayerTracker();
+        activeTrackers.Add(trackerJugador);
+        ITrackerAsset trackerGeneral = new GeneralTracker();
+        activeTrackers.Add(trackerGeneral);
     }
 
-    void TrackEvent() {
-        // WORK TO DO
-        // Pasar el evento a persistencia
+    void TrackEvent(TrackerEvent t_event) {
+        bool accepted = false;
+        foreach (var tracker in activeTrackers)
+        {
+            if (tracker.accept(t_event))
+                accepted = true;
+        }
+
+        if (accepted) {
+            eventList.Add(t_event);
+            eventsInQueue++;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //Cada X tiempo o cantidad de eventos...
+        if (eventsInQueue >= 10) {
+            persistenceObject.send(eventList);
+            eventList.Clear();
+        }
     }
 }
