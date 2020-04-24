@@ -20,6 +20,12 @@ public class EventPlayerDead : TrackerEvent
         return base.SerializeToCSV() + ", " + posX.ToString() + "," + posY.ToString() + "," + causeOf.ToString();
 
     }
+    public string SerializeToJson()
+    {
+        return base.SerializeToJson() + " PosX: " + "\"" + posX + "\"" + ",\n" +
+            " PosY: " + "\"" + posY + "\"" + ",\n" +
+            " CauseOfDeath: " + "\"" + causeOf.ToString() + "\"" + ",\n";
+    }
 
 
 }

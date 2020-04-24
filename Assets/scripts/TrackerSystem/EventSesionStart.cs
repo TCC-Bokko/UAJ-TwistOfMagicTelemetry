@@ -8,9 +8,18 @@ class EventSesionStart : TrackerEvent
     public EventSesionStart() :base(DateTime.Now, 1, EventType.SESSION_START)
     {
     }
-      
+    public string SerializeToCSV()
+    {
+        return base.SerializeToCSV() + ",\n";
 
-    
+    }
+    public string SerializeToJson()
+    {
+        return base.SerializeToJson() + ",\n";
+    }
+
+
+
 }
 
 

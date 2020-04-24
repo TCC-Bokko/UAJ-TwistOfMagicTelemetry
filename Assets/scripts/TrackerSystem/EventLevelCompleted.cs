@@ -19,4 +19,8 @@ public class EventLevelCompleted : TrackerEvent
         return base.SerializeToCSV() + ", " + level.ToString();
 
     }
+    public string SerializeToJson()
+    {
+        return base.SerializeToJson() + " Level: " + "\"" + this.level + "\"" + ",\n";
+    }
 }

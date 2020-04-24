@@ -11,6 +11,16 @@ public class EventSesionEnd : TrackerEvent
 
 
     }
+    public string SerializeToCSV()
+    {
+        return base.SerializeToCSV() + ",\n";
+
+    }
+    public string SerializeToJson()
+    {
+        return base.SerializeToJson() + ",\n";
+    }
+
 
 }
 

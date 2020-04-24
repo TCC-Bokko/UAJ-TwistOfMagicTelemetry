@@ -18,4 +18,8 @@ public class EventCheckpoint : TrackerEvent
         return base.SerializeToCSV() + ", " + idCheckpoint.ToString();
 
     }
+    public  string SerializeToJson()
+    {
+        return  base.SerializeToJson()+" IdCheckPoint: " + "\"" + idCheckpoint + "\"" + ",\n";
+    }
 }

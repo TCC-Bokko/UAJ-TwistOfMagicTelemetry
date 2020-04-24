@@ -52,6 +52,16 @@ public class TrackerEvent
     {
         return time.ToString() + "," + session.ToString() + "," + eventType.ToString();
     }
+    public virtual string SerializeToJson()
+    {
+      
+
+        return "User: { \n" + " IDSesion: " + "\"" + this.session + "\"" + ",\n" +
+             " Time: " + "\"" + time.ToString() + "\"" + ",\n" +
+             " Event: " + "\"" +eventType.ToString()+ "\"" + ",\n";
+    }
+
+
 
     public EventType getType() {
         return this.eventType;
@@ -69,7 +79,7 @@ public class TrackerEvent
     { }
 
 }
-  */  
+  */
 
 
 
