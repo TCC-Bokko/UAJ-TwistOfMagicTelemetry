@@ -18,6 +18,6 @@ public class ITrackerAsset1 : MonoBehaviour
         return isValid;
     }
 
-    public abstract bool checkValidity() { };
+    //public abstract bool checkValidity() { };
    
 }

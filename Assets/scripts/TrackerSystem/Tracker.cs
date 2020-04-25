@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Tracker : MonoBehaviour
-{
+public class Tracker {
     // VARIABLES ///////////////////////////////////////////////////////////////////////
     // Proceso del singleton
-    public static Tracker instance;
+    private static Tracker instance = null;
 
     // Objetos de persistencia
     private IPersistence persistenceObject; // IPersistence se comunica con ISerializer
@@ -23,24 +23,14 @@ public class Tracker : MonoBehaviour
     // sin embargo sería muy facil dividirlos por cada tracker (general, jugador y nivel) 
     // en el momento de validarlos.
     private List<TrackerEvent> eventList;
-    int eventsInQueue = 0;
 
-
-    // METODOS ///////////////////////////////////////////////////////////////////////
-    //Para que no se destruya entre escenas
-    void Awake()
-    {
-        DontDestroyOnLoad(transform.gameObject);
-    }
-
-    // Init con instanciado
-    void Start()
-    {
-        // Genera el singleton.
-        instance = this;
+    Tracker() {
+        activeTrackers = new List<ITrackerAsset>();
+        eventList = new List<TrackerEvent>();
 
         // Enlazado de otras clases segun tipo
         persistenceObject = new IPersistence();
+
         // Llenar lista de trackers
         ITrackerAsset trackerNivel = new LevelTracker();
         activeTrackers.Add(trackerNivel);
@@ -50,7 +40,26 @@ public class Tracker : MonoBehaviour
         activeTrackers.Add(trackerGeneral);
     }
 
-    void TrackEvent(TrackerEvent t_event) {
+    public static Tracker getInstance() {
+        if (instance == null) {
+            instance = new Tracker();
+        }
+        return instance;
+    }
+
+    // METODOS ///////////////////////////////////////////////////////////////////////
+    //Para que no se destruya entre escenas
+    void Awake() {
+        //DontDestroyOnLoad(transform.gameObject);
+    }
+
+    // Init con instanciado
+    void Start() { 
+        
+        
+    }
+
+    public void TrackEvent(TrackerEvent t_event) {
         bool accepted = false;
         foreach (var tracker in activeTrackers)
         {
@@ -60,17 +69,17 @@ public class Tracker : MonoBehaviour
 
         if (accepted) {
             eventList.Add(t_event);
-            eventsInQueue++;
         }
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         //Cada X tiempo o cantidad de eventos...
-        if (eventsInQueue >= 10) {
+        if (eventList.Count >= 1) {
             persistenceObject.send(eventList);
             eventList.Clear();
+            persistenceObject.Update();
         }
     }
 }

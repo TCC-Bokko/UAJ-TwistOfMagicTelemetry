@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System;
 
-
-
-public class TrackerEvent
-{
+[Serializable]
+public class TrackerEvent {
     // Clase Abstracta
     // Define variables y métodos compartidos por todos los eventos.
     // Se utiliza como clase padre para implementar todos los eventos descritos en el documento de diseño. 
@@ -41,7 +39,6 @@ public class TrackerEvent
         this.time = time_;
         this.session = session_;
         this.eventType = evenType_;
-
     }
     public long getSession()
     {
@@ -54,8 +51,6 @@ public class TrackerEvent
     }
     public virtual string SerializeToJson()
     {
-      
-
         return "User: { \n" + " IDSesion: " + "\"" + this.session + "\"" + ",\n" +
              " Time: " + "\"" + time.ToString() + "\"" + ",\n" +
              " Event: " + "\"" +eventType.ToString()+ "\"" + ",\n";
@@ -70,20 +65,3 @@ public class TrackerEvent
 
     //serialize to csv & to json or xml or something
 }
-
-/*class EventSesionStart : TrackerEvent
-{
-    // Evento invocado por GeneralTracker
-
-    public EventSesionStart() : base(DateTime.Now,1, EventType.SESSION_START)
-    { }
-
-}
-  */
-
-
-
-
-
-
-

@@ -43,12 +43,20 @@ public class GM : MonoBehaviour {
     public static bool firsttime = true;
     public static float time;
     string textotiempo;
-    
+
+	//-----------TRACKER---------------
+	public static Tracker TrackerInstance;
+
+
+	//--------------------------
+
 	//public GameObject[] Glifos;			//Array de glifos, mover aqui todos los que existan en escena para que sean manejados.
 
 	void Start () {
-       
-        cajaHundida = false;
+
+		TrackerInstance = Tracker.getInstance();
+
+		cajaHundida = false;
         animGemas = gemas.GetComponent<Animator>();
 		mostrarCrono = false;
 		tiempo = 0;
@@ -89,8 +97,6 @@ public class GM : MonoBehaviour {
 	void Update () {
 		//gestion mana gui
 		animGemas.SetFloat("mana", mana);
-
-
 
 		//GESTION DE MANA: ANDAR SOBRE EL AGUA
 		if (waterWalkActivo == true) {
@@ -194,6 +200,14 @@ public class GM : MonoBehaviour {
 				Invoke ("curandoFin", segXRecMana);
 			} 
 		}
+		//--------------------------------TRACKER---------------------------
+
+		TrackerInstance.Update();
+
+
+
+
+		//------------------------------------------------------------------
 	}   // FIN UPDATE
 
 
@@ -354,6 +368,8 @@ public class GM : MonoBehaviour {
 	{
 		Invoke ("empiezaJuego", 1f);
 		SM.instance.clickOpcion ();
+		TrackerEvent gameStart = new EventSesionStart();
+		TrackerInstance.TrackEvent(gameStart);
 	}
 
     public void OnSalirClick()

@@ -20,6 +20,6 @@ public class EventCheckpoint : TrackerEvent
     }
     public  string SerializeToJson()
     {
-        return  base.SerializeToJson()+" IdCheckPoint: " + "\"" + idCheckpoint + "\"" + ",\n";
+        return  base.SerializeToJson() + " IdCheckPoint: " + "\"" + idCheckpoint + "\"" + ",\n";
     }
 }
