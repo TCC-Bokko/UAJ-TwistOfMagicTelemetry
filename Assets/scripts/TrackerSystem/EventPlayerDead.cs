@@ -8,11 +8,11 @@ public class EventPlayerDead : TrackerEvent
     protected float posX;
     protected float posY;
     protected causeOfDeath causeOf;
-    public EventPlayerDead(float x,float y, causeOfDeath cause): base(DateTime.Now, 1, EventType.SESSION_START)
+    public EventPlayerDead(float x,float y): base(DateTime.Now, 1, EventType.SESSION_START)
     {
         posX = x;
         posY = y;
-        causeOf = cause;
+        //causeOf = cause;
     }
     //Ovverride?
     public string SerializeToCSV()

@@ -53,7 +53,7 @@ public class GM : MonoBehaviour {
 	//public GameObject[] Glifos;			//Array de glifos, mover aqui todos los que existan en escena para que sean manejados.
 
 	void Start () {
-
+        //Inicialización del tracker
 		TrackerInstance = Tracker.getInstance();
 
 		cajaHundida = false;
@@ -315,7 +315,9 @@ public class GM : MonoBehaviour {
 
 	//GESTION DE MUERTE DEL PERSONAJE (MANA = 0)
 	public void Muerte(){
-		mana = -1;
+        TrackerEvent playerDeath = new EventPlayerDead(player.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
+        TrackerInstance.TrackEvent(playerDeath);
+        mana = -1;
 		player.GetComponent<Movimiento>().enabled = false;
 		player.GetComponent<Disparo> ().enabled = false;
 		player.GetComponent<Animator> ().SetBool ("muerto", true);  					//Activar animación desmayarse.
@@ -346,22 +348,30 @@ public class GM : MonoBehaviour {
 	//AJUSTAR RESPAWN AL CARGAR NUEVO NIVE
 	void OnLevelWasLoaded(int numLvl){  //Cuando se acaba de cargar un nivel, recolocar el respawn
 		if (numLvl == 1) { //biblioteca
-			respawn.x = 8.5f;
+            respawn.x = 8.5f;
 			respawn.y = -10f;
 		} else if (numLvl == 2) { //tutorial
 			respawn.x = 5.5f;
 			respawn.y = -18f;
 		} else if (numLvl == 3) { //Nivel 1
-			respawn.x = 5.59f;
+            TrackerEvent levelStart = new EventLevelStart(1);
+            TrackerInstance.TrackEvent(levelStart);
+            respawn.x = 5.59f;
 			respawn.y = -37.01f;
 		} else if (numLvl == 4) { //Nivel 2
-			respawn.x = 7.23f;
+            TrackerEvent levelStart = new EventLevelStart(2);
+            TrackerInstance.TrackEvent(levelStart);
+            respawn.x = 7.23f;
 			respawn.y = -6f;
 		} else if (numLvl == 5) { //Nivel 3
-			respawn.x = 3f;
+            TrackerEvent levelStart = new EventLevelStart(3);
+            TrackerInstance.TrackEvent(levelStart);
+            respawn.x = 3f;
 			respawn.y = -42f;
 		} else if (numLvl == 6) { //Nivel 4
-			respawn.x = 4f;
+            TrackerEvent levelStart = new EventLevelStart(4);
+            TrackerInstance.TrackEvent(levelStart);
+            respawn.x = 4f;
 			respawn.y = -22f;
 		}
 	}
