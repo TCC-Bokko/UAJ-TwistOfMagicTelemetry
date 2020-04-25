@@ -9,9 +9,10 @@ public class EventLevelCompleted : TrackerEvent
 
         //sIMILAR AL Level ENd
     protected int level;
-    public EventLevelCompleted(int nivel) : base(DateTime.Now, 1, EventType.LEVEL_COMPLETED)
+    public EventLevelCompleted(int nivel) : base(DateTime.Now, EventType.LEVEL_COMPLETED)
     {
         this.level = nivel;
+        session = GM.instance.getSession();
     }
 
     public string SerializeToCSV()

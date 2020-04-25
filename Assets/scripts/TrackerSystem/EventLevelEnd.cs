@@ -7,9 +7,10 @@ public class EventLevelEnd : TrackerEvent
     // Evento invocado por LevelTracker
 
     protected int level;
-    public EventLevelEnd(int nivel) : base(DateTime.Now, 1, EventType.LEVEL_START)
+    public EventLevelEnd(int nivel) : base(DateTime.Now, EventType.LEVEL_END)
     {
         this.level = nivel;
+        session = GM.instance.getSession();
     }
     public string SerializeToCSV()
     {

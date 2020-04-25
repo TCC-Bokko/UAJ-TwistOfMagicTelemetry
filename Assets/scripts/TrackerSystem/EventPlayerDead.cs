@@ -8,10 +8,11 @@ public class EventPlayerDead : TrackerEvent
     protected float posX;
     protected float posY;
     protected causeOfDeath causeOf;
-    public EventPlayerDead(float x,float y): base(DateTime.Now, 1, EventType.SESSION_START)
+    public EventPlayerDead(float x,float y): base(DateTime.Now, EventType.DEAD)
     {
         posX = x;
         posY = y;
+        session = GM.instance.getSession();
         //causeOf = cause;
     }
     //Ovverride?

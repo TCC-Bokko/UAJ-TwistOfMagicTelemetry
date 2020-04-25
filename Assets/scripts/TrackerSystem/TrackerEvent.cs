@@ -14,6 +14,7 @@ public class TrackerEvent {
         LEVEL_START,
         LEVEL_END,
         LEVEL_COMPLETED,
+        LEVEL_RESTART,
         DEAD,
         CHECKPOINT,
         IDLE_MANA1,
@@ -34,16 +35,19 @@ public class TrackerEvent {
     public TrackerEvent() { }//EVITAR ERRORS
 
      //Todos los eventos tienen esto en comun
-    public TrackerEvent(DateTime time_, long session_, EventType evenType_)
+    public TrackerEvent(DateTime time_, EventType evenType_)
     {
         this.time = time_;
-        this.session = session_;
+       
         this.eventType = evenType_;
     }
-    public long getSession()
+    
+    public void setSession(int s)
     {
-        return this.session;
+        this.session = s;
     }
+
+   
 
     public virtual string SerializeToCSV()
     {

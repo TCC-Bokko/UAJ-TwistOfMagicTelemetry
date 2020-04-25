@@ -9,10 +9,9 @@ public class EventIdleMana1 : TrackerEvent
 
         //Creo que con esta creo que no es necesaior 4 clases   
         //Habria que pensar otra manera
-    public EventIdleMana1() : base(DateTime.Now, 1, EventType.IDLE_MANA1)
+    public EventIdleMana1() : base(DateTime.Now, EventType.IDLE_MANA1)
     {
-
-
+        session = GM.instance.getSession();
     }
 
 
