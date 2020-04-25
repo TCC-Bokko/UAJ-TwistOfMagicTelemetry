@@ -12,6 +12,7 @@ public class IPersistence {
 
         //Establecer aqui que tipo de serializador usar
         serializeObject = new JSONSerializer();
+        //serializeObject = new CSVSerializer();
     }
 
     // Start is called before the first frame update

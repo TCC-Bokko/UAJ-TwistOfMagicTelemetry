@@ -15,7 +15,7 @@ class EventSesionStart : TrackerEvent
     }
     public string SerializeToJson()
     {
-        return base.SerializeToJson() + ",\n";
+        return base.SerializeToJson() + "\""+ "\n";
     }
 
 
