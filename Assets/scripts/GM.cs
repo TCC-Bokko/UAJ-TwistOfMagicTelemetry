@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 
@@ -47,18 +48,41 @@ public class GM : MonoBehaviour
     public static float time;
     string textotiempo;
     public int numeroNivel;
-
+    private int sessionID = 0;
     //-----------TRACKER---------------
     public static Tracker TrackerInstance;
 
     public int getSession()
     {
-        return 1;
+        return sessionID;
     }
+
+    public void LoadSessionID() {
+        string fullpath = Application.dataPath + "/Sessionlocator.txt";
+        if (!File.Exists(fullpath))
+        {
+            File.Create(fullpath).Close();
+        }
+        else
+        {
+            StreamReader r = new StreamReader(fullpath);
+            sessionID = int.Parse(r.ReadLine());
+            r.Close();
+        }
+        File.WriteAllText(fullpath, "");
+        StreamWriter w = new StreamWriter(fullpath);
+        int aux = sessionID + 1;
+        w.Write(aux);
+        w.Close();
+    }
+
     //--------------------------
 
     //public GameObject[] Glifos;			//Array de glifos, mover aqui todos los que existan en escena para que sean manejados.
-
+    private void Awake()
+    {
+        LoadSessionID();
+    }
     void Start()
     {
         //Inicialización del tracker

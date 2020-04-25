@@ -23,4 +23,8 @@ public class CSVSerializer : ISerializer
         Debug.Log(j);
         return j;
     }
+    public override bool persistance(string eventTrace)
+    {
+        throw new System.NotImplementedException();
+    }
 }
