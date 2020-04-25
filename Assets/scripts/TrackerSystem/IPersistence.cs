@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class IPersistence {
     //List of events
-    private List<TrackerEvent> eventList;
+    private CircularBuffer<TrackerEvent> eventList;
+    private int queueSize;
     private ISerializer serializeObject;
 
     public IPersistence() {
-        eventList = new List<TrackerEvent>();
-
+        //Tamaño máximo de cola circular
+        queueSize = 100;
         //Establecer aqui que tipo de serializador usar
+        eventList = new CircularBuffer<TrackerEvent>(queueSize);
         serializeObject = new JSONSerializer();
         //serializeObject = new CSVSerializer();
     }
@@ -26,11 +28,12 @@ public class IPersistence {
         //Ver en que momento mandar a serializar
         //ver si serializar evento a evento o toda la lista de eventos
         //adaptar el metodo serialize del serializeObject para recibir evento o lista de eventos
-        
-        foreach (var t_event in eventList) { 
-            serializeObject.serialize(t_event);
+
+        if (eventList.Count() > 0)
+        {
+            serializeObject.serialize(eventList.Read());
         }
-        
+
         // o bien...
         /*
         serializeObject.serialize(eventList);
@@ -46,4 +49,43 @@ public class IPersistence {
     }
     
 
+}
+
+public class CircularBuffer<T>
+{
+    Queue<T> _queue;
+    int _size;
+    int _elementCount;
+
+    public CircularBuffer(int size)
+    {
+        _queue = new Queue<T>(size);
+        _size = size;
+    }
+
+    public void Add(T obj)
+    {
+        if (_queue.Count == _size)
+        {
+            _queue.Dequeue();
+            _queue.Enqueue(obj);
+        }
+        else
+            _queue.Enqueue(obj);
+    }
+
+    public int Count()
+    {
+        return _queue.Count;
+    }
+
+    public T Read()
+    {
+        return _queue.Dequeue();
+    }
+
+    public T Peek()
+    {
+        return _queue.Peek();
+    }
 }
