@@ -43,7 +43,9 @@ public class Portones : MonoBehaviour {
 		if (estado == "Abierto") 
 			{
 			if (Input.GetKeyDown (KeyCode.V) && destino !=-1) {
-				SceneManager.LoadScene (destino);
+                TrackerEvent levelCompleted = new EventLevelCompleted(GM.instance.numeroNivel);
+                GM.TrackerInstance.TrackEvent(levelCompleted);
+                SceneManager.LoadScene (destino);
 				}
 			}
 	}

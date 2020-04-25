@@ -43,6 +43,7 @@ public class GM : MonoBehaviour {
     public static bool firsttime = true;
     public static float time;
     string textotiempo;
+    public int numeroNivel;
 
 	//-----------TRACKER---------------
 	public static Tracker TrackerInstance;
@@ -221,6 +222,7 @@ public class GM : MonoBehaviour {
         texto = min.ToString() + ":" + seg.ToString();
 
     }
+
     //GESTION HERIDO
     public void Herido(int dirX, int dirY)
 	{
@@ -287,7 +289,6 @@ public class GM : MonoBehaviour {
 	public void TelequinesisActiva(){
 		telequinesisActivo = true;
 		player.GetComponent<Disparo> ().enabled = false;
-
 	}
 
 	//GESTION DE TELEQUINESIS: DESACTIVA HABILIDAD
@@ -342,12 +343,12 @@ public class GM : MonoBehaviour {
 		player.GetComponent<Disparo> ().enabled = true;
 		mana = manamax;
 		tiempo += 30;															//Penalizar al jugador con tiempo agregado al cronometro
-
 	} 
 		
 	//AJUSTAR RESPAWN AL CARGAR NUEVO NIVE
 	void OnLevelWasLoaded(int numLvl){  //Cuando se acaba de cargar un nivel, recolocar el respawn
-		if (numLvl == 1) { //biblioteca
+        numeroNivel = numLvl;
+        if (numLvl == 1) { //biblioteca
             respawn.x = 8.5f;
 			respawn.y = -10f;
 		} else if (numLvl == 2) { //tutorial
