@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelCheckpoint : MonoBehaviour
 {
-    private Movimiento jugador;
+    public GameObject jugador;
     bool triggered;
     public int checkPoint_num;
 
@@ -18,7 +18,7 @@ public class LevelCheckpoint : MonoBehaviour
     {
         if (otro.name == jugador.name && !triggered)
         {
-            TrackerEvent checkpoint = new EventCheckpoint(checkPoint_num);
+            TrackerEvent checkpoint = new EventCheckpoint(checkPoint_num,GM.instance.numeroNivel);
             GM.TrackerInstance.TrackEvent(checkpoint);
             triggered = true;
         }

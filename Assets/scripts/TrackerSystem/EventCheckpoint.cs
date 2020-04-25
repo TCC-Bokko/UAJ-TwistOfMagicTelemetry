@@ -9,19 +9,22 @@ public class EventCheckpoint : TrackerEvent
     
     // Evento invocado por LevelTracker
     protected int idCheckpoint;
-    public EventCheckpoint(int n) : base(DateTime.Now, EventType.CHECKPOINT)
+    protected int level;
+    public EventCheckpoint(int n,int nivel) : base(DateTime.Now, EventType.CHECKPOINT)
     {
+        level = nivel;
         session = GM.instance.getSession();
         idCheckpoint = n;
     }
     //Añadir override???
     public string SerializeToCSV()
     {
-        return base.SerializeToCSV() + ", " + idCheckpoint.ToString();
+        return base.SerializeToCSV() + ", " + idCheckpoint.ToString() + ","+ level.ToString();
 
     }
     public  string SerializeToJson()
     {
-        return  base.SerializeToJson() + " IdCheckPoint: " + "\"" + idCheckpoint + "\"" + ",\n";
+        return  base.SerializeToJson() + " IdCheckPoint: " + "\"" + idCheckpoint + "\"" + 
+            "NºNivel: "+ "\"" + level+ "\"" + ",\n";
     }
 }

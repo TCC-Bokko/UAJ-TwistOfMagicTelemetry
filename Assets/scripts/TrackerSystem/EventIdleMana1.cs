@@ -5,15 +5,21 @@ using System;
 
 public class EventIdleMana1 : TrackerEvent
 {
-    // Evento invocado por PlayerTracker
-
-        //Creo que con esta creo que no es necesaior 4 clases   
-        //Habria que pensar otra manera
-    public EventIdleMana1() : base(DateTime.Now, EventType.IDLE_MANA1)
+    float t;
+    public EventIdleMana1(float time) : base(DateTime.Now, EventType.IDLE_MANA1)
     {
+        t = time;
         session = GM.instance.getSession();
     }
+    public string SerializeToCSV()
+    {
+        return base.SerializeToCSV() + ", " + t.ToString();
 
+    }
+    public string SerializeToJson()
+    {
+        return base.SerializeToJson() + " Tiempo de recarga: " + "\"" + t + "\"" + ",\n";
+    }
 
 
 
