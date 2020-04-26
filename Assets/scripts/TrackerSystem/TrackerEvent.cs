@@ -56,13 +56,11 @@ public class TrackerEvent {
              " Time: " + "\"" + time.ToString() + "\"" + ",\n" +
              " Event: " + "\"" +eventType.ToString()+ "\"" + ",\n";
     }
-
+    //serialize to csv & to json or xml or something
 
 
     public EventType getType() {
         return this.eventType;
     }
 
-
-    //serialize to csv & to json or xml or something
 }

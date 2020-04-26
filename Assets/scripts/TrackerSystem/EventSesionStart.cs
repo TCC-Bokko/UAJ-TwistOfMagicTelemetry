@@ -9,12 +9,12 @@ class EventSesionStart : TrackerEvent
     {
         session = GM.instance.getSession();
     }
-    public string SerializeToCSV()
+    public override string SerializeToCSV()
     {
         return base.SerializeToCSV() + ",\n";
 
     }
-    public string SerializeToJson()
+    public override string SerializeToJson()
     {
         return base.SerializeToJson() + "\""+ "\n";
     }

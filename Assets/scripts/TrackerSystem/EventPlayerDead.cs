@@ -15,13 +15,13 @@ public class EventPlayerDead : TrackerEvent
         session = GM.instance.getSession();
         //causeOf = cause;
     }
-    //Ovverride?
-    public string SerializeToCSV()
+   
+    public override string SerializeToCSV()
     {
         return base.SerializeToCSV() + ", " + posX.ToString() + "," + posY.ToString() + "," + causeOf.ToString();
 
     }
-    public string SerializeToJson()
+    public override string SerializeToJson()
     {
         return base.SerializeToJson() + " PosX: " + "\"" + posX + "\"" + ",\n" +
             " PosY: " + "\"" + posY + "\"" + ",\n" +

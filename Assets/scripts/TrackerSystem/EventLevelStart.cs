@@ -11,12 +11,12 @@ public class EventLevelStart : TrackerEvent
         this.level = nivel;
         session = GM.instance.getSession();
     }
-    public string SerializeToCSV()
+    public override string SerializeToCSV()
     {
         return base.SerializeToCSV() + ", " + this.level.ToString(); ;
 
     }
-    public string SerializeToJson()
+    public override string SerializeToJson()
     {
         return base.SerializeToJson() + " Level: " + "\"" + this.level + "\"" + ",\n";
     }

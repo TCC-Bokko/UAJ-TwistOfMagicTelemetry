@@ -15,7 +15,8 @@ public class JSONSerializer : ISerializer {
     //Aqui tengo que cerrrar lo que viene a ser el archivo json
     // Update is called once per frame
 
-     public JSONSerializer() {
+    public JSONSerializer()
+    {
 
     }
 
@@ -27,6 +28,7 @@ public class JSONSerializer : ISerializer {
 
 /////////////////       
         string j = tE.SerializeToJson() +  "}"  + "\n";
+        Debug.Log(j);
         persistance(j);
         return j;
     }

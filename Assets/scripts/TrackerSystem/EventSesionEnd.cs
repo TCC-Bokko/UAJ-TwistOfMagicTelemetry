@@ -11,12 +11,12 @@ public class EventSesionEnd : TrackerEvent
 
 
     }
-    public string SerializeToCSV()
+    public override string SerializeToCSV()
     {
         return base.SerializeToCSV() + ",\n";
 
     }
-    public string SerializeToJson()
+    public override string SerializeToJson()
     {
         return base.SerializeToJson() + "\"" + "\n";
     }

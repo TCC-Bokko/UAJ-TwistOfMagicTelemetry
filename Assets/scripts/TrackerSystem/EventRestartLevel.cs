@@ -13,13 +13,14 @@ public class EventRestartLevel : TrackerEvent
         nivel = n;
         session = GM.instance.getSession();
     }
-    //Añadir override???
-    public string SerializeToCSV()
+    
+
+    public override string SerializeToCSV()
     {
         return base.SerializeToCSV() + ", " + nivel.ToString();
 
     }
-    public string SerializeToJson()
+    public override string SerializeToJson()
     {
         return base.SerializeToJson() + " Nivel: " + "\"" + nivel + "\"" + ",\n";
     }

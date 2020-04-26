@@ -11,12 +11,12 @@ public class EventIdleMana1 : TrackerEvent
         t = time;
         session = GM.instance.getSession();
     }
-    public string SerializeToCSV()
+    public override string SerializeToCSV()
     {
         return base.SerializeToCSV() + ", " + t.ToString();
 
     }
-    public string SerializeToJson()
+    public override string SerializeToJson()
     {
         return base.SerializeToJson() + " Tiempo de recarga: " + "\"" + t + "\"" + ",\n";
     }
