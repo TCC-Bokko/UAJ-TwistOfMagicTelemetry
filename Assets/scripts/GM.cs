@@ -51,13 +51,13 @@ public class GM : MonoBehaviour
     private int sessionID = 0;
     //-----------TRACKER---------------
     public static Tracker TrackerInstance;
-
+    private string sessionFileExt;
     public int getSession()
     {
         return sessionID;
     }
 
-    public void LoadSessionID() {
+    public void LoadSessionID() { //    IMPORTANTISIMO--> Se llama dos veces por sesion ahora mismo, ya que el GM se inicializa de nuevo en el paso entre escenas.
         string fullpath = Application.dataPath + "/Sessionlocator.txt";
         if (!File.Exists(fullpath))
         {
@@ -81,13 +81,13 @@ public class GM : MonoBehaviour
     //public GameObject[] Glifos;			//Array de glifos, mover aqui todos los que existan en escena para que sean manejados.
     private void Awake()
     {
-        LoadSessionID();
+        
     }
     void Start()
     {
         //Inicialización del tracker
         TrackerInstance = Tracker.getInstance();
-
+        LoadSessionID();
         cajaHundida = false;
         animGemas = gemas.GetComponent<Animator>();
         mostrarCrono = false;

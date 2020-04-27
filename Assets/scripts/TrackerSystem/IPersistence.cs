@@ -7,13 +7,20 @@ public class IPersistence {
     private CircularBuffer<TrackerEvent> eventList;
     private int queueSize;
     private ISerializer serializeObject;
-
+    private bool serializeType = true; // Cambiar a int en caso de agregar mas serializadores
     public IPersistence() {
         //Tamaño máximo de cola circular
         queueSize = 100;
         //Establecer aqui que tipo de serializador usar
         eventList = new CircularBuffer<TrackerEvent>(queueSize);
-        serializeObject = new JSONSerializer();
+        if (!serializeType)
+        {
+            serializeObject = new JSONSerializer();
+        }
+        else
+        {
+            serializeObject = new CSVSerializer();
+        }
         //serializeObject = new CSVSerializer();
     }
 
@@ -47,7 +54,6 @@ public class IPersistence {
             eventList.Add(t_event);
         }
     }
-    
 
 }
 
