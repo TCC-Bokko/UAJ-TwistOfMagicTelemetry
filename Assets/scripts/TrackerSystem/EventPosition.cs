@@ -7,8 +7,8 @@ public class EventPosition : TrackerEvent
     // Evento invocado por PlayerTracker
     protected float posX;
     protected float posY;
-    protected causeOfDeath causeOf;
-    public EventPosition(float x, float y) : base(DateTime.Now, EventType.DEAD)
+   
+    public EventPosition(float x, float y) : base(DateTime.Now, EventType.PLAYER_POSITION)
     {
         posX = x;
         posY = y;
@@ -18,14 +18,13 @@ public class EventPosition : TrackerEvent
 
     public override string SerializeToCSV()
     {
-        return base.SerializeToCSV() + ", " + posX.ToString() + "," + posY.ToString() + "," + causeOf.ToString();
+        return base.SerializeToCSV() + ", " + posX.ToString() + "," + posY.ToString() ;
 
     }
     public override string SerializeToJson()
     {
         return base.SerializeToJson() + " PosX: " + "\"" + posX + "\"" + ",\n" +
-            " PosY: " + "\"" + posY + "\"" + ",\n" +
-            " CauseOfDeath: " + "\"" + causeOf.ToString() + "\"" + ",\n";
+            " PosY: " + "\"" + posY + "\"" + ",\n" ;
     }
 
 
