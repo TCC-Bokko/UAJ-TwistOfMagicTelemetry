@@ -288,10 +288,11 @@ public class GM : MonoBehaviour
         if (lastPlayerTrack > timeXplayerTrack) {
             //Pillamos posición de jugador
             playerXtrack = player.transform.position.x;
-            playerXtrack = player.transform.position.y;
+            playerYtrack = player.transform.position.y;
             //Mandamos evento
             TrackerEvent playerPosTrack = new EventPosition(playerXtrack, playerYtrack);
             TrackerInstance.TrackEvent(playerPosTrack);
+            lastPlayerTrack = 0.0f;
         }
 
         TrackerInstance.Update();
