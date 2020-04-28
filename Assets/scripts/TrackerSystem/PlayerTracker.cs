@@ -34,6 +34,8 @@ public class PlayerTracker : ITrackerAsset
             isValid = true;
         if (t_eventType == TrackerEvent.EventType.IDLE_MANA4)
             isValid = true;
+        if (t_eventType == TrackerEvent.EventType.PLAYER_POSITION)
+            isValid = true;
 
         return isValid;
     }
