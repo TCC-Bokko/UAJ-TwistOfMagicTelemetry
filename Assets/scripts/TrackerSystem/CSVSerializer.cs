@@ -19,10 +19,7 @@ public class CSVSerializer : ISerializer
     {
 
     }
-    public override string getExtension()
-    {
-        return extension;
-    }
+   
     public override string serialize(TrackerEvent tE)
     {
         //string j = JsonUtility.ToJson(tE);

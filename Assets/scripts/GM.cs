@@ -22,7 +22,7 @@ public class GM : MonoBehaviour
     public int manamin = 0;             //Definimos el mana mínimo que el jugador puede tener. 
     public int mana = 200;              //Cantidad de mana disponible.
     public int SegXManaTel = 1;         //Consumo de Telequinesis por tick de tiempo (para variar cada cuantos segundos se resta esta cantidad ver UPDATE->GESTION DE MANA: Telequinesis)
-    public int SegXManaAgua = 1;            //Consumo de andar sobre agua por tick de tiempo (para variar cada cuantos segundos se resta esta cantidad ver UPDATE->GESTION DE MANA: Andar Sobre Agua)
+    public int SegXManaAgua = 1;        //Consumo de andar sobre agua por tick de tiempo (para variar cada cuantos segundos se resta esta cantidad ver UPDATE->GESTION DE MANA: Andar Sobre Agua)
     public int consumBFuego = 1;        //Consumo de bola de fuego
     public int segXRecMana = 1;         //Velocidad a la que se recupera mana en segundos.
     public int segXBajoagua;            //cantidad de segundos (bajo el agua) en quitar una unidad.
@@ -51,7 +51,10 @@ public class GM : MonoBehaviour
     private int sessionID = 0;
     //-----------TRACKER---------------
     public static Tracker TrackerInstance;
-    private string sessionFileExt;
+    private string sessionFileExt;  
+    private float idleManaTime;     //Tiempo que lleva regenerando mana.
+    private float lastCureTime;     //Tiempo desde la última vez que se curo mana
+
     public int getSession()
     {
         return sessionID;
@@ -87,7 +90,10 @@ public class GM : MonoBehaviour
     {
         //Inicialización del tracker
         TrackerInstance = Tracker.getInstance();
+        idleManaTime = 0.0f;
         LoadSessionID();
+
+        //Variables de Juego
         cajaHundida = false;
         animGemas = gemas.GetComponent<Animator>();
         mostrarCrono = false;
@@ -165,7 +171,6 @@ public class GM : MonoBehaviour
             {
                 restando = true;
                 Invoke("restaManaTiempoAqu", segXBajoagua);                     //resta la cantidad de mana definida por consumAgua cada 1 segundos.
-
             }
             if (mana <= 0)
             {
@@ -223,12 +228,6 @@ public class GM : MonoBehaviour
                 Glifos [1].GetComponent<Glifo> ().activado = true;
         }*/
 
-        //GESTION DE MANA: LIMITE SUPERIOR
-        if (mana > manamax)
-        {
-            mana = manamax;
-        }
-
         //GESTION DE MANA: MUERTE (LIMITE INFERIOR)
         if (mana == 0)
         {
@@ -248,22 +247,40 @@ public class GM : MonoBehaviour
             }
         }
 
-        // GESTION DE MANA: CURA.
+        // GESTION DE MANA: Recuperación.
+        //Si el mana es mayor que el minimo y menor que el máximo
         if (mana > manamin && mana < manamax)
         {
-            if (!curando)
+            //Si no esta activado "curando" mana
+            if (!curando && !restando)
             {
-                Invoke("curaManaXTiempo", segXRecMana);
+                //Tracker
+                idleManaTime = 0.0f;
                 curando = true;
-                Invoke("curandoFin", segXRecMana);
             }
+
+            if (curando) { 
+                //Actualizar idleManatime
+                idleManaTime += Time.deltaTime;
+
+                // Si ha pasado el tiempo minimo de curación, aumenta en 1 el mana.
+                lastCureTime += Time.deltaTime;
+                if (lastCureTime > segXRecMana)
+                {
+                    lastCureTime = 0.0f;
+                    mana++;
+                    if (mana == manamax) curandoFin();
+                }
+            }
+        }
+
+        if (mana > manamax) {
+            mana = manamax;
+            if (curando) curandoFin(); //Pone curando a false
         }
         //--------------------------------TRACKER---------------------------
 
         TrackerInstance.Update();
-
-
-
 
         //------------------------------------------------------------------
     }   // FIN UPDATE
@@ -277,7 +294,6 @@ public class GM : MonoBehaviour
         int min = (int)tiempo / 60;
         int seg = (int)tiempo % 60;
         texto = min.ToString() + ":" + seg.ToString();
-
     }
 
     //GESTION HERIDO
@@ -305,10 +321,13 @@ public class GM : MonoBehaviour
     public void restarMana(int cantidad)
     {
         mana -= cantidad;
+        if (curando) curandoFin();
     }
 
     public void curandoFin()
     {
+        TrackerEvent idleMana = new EventIdleMana1(idleManaTime);
+        TrackerInstance.TrackEvent(idleMana);
         curando = false;
     }
 
@@ -318,13 +337,15 @@ public class GM : MonoBehaviour
     }
 
     //METODO QUE MODIFICA EL MANA (CURARSE 1 PUNTO)
+    /*
     public void curaManaXTiempo()
     {
-        if (!waterWalkActivo && !telequinesisActivo && !enAgua)
-
+        //Cura 1 por frame.
+        if (!waterWalkActivo && !telequinesisActivo && !enAgua) {
             mana++;
-
+        }
     }
+    */
 
     /*	//METODO QUE MODIFICA EL MANA (CURARSE 1 PUNTO)
         public void manaXtiempo (){
@@ -336,6 +357,7 @@ public class GM : MonoBehaviour
     {
         mana -= 1;
         restando = false;
+        if (curando) curandoFin();
     }
 
     //METODO QUE MODIFICA EL MANA (TELEQUINESIS)
@@ -343,12 +365,14 @@ public class GM : MonoBehaviour
     {
         mana -= 1;
         restando = false;
+        if (curando) curandoFin();
     }
 
     //METODO QUE MODIFICA EL MANA (BOLA FUEGO)
     public void Disparo()
     {
         mana -= consumBFuego;
+        if (curando) curandoFin();
     }
 
     //GESTION DE TELEQUINESIS: ACTIVA HABILIDAD
@@ -424,56 +448,67 @@ public class GM : MonoBehaviour
         numeroNivel = numLvl;
         if (numLvl == 1)
         { //biblioteca
+            TrackerEvent levelStart = new EventLevelStart(1);
+            TrackerInstance.TrackEvent(levelStart);
             respawn.x = 8.5f;
             respawn.y = -10f;
         }
         else if (numLvl == 2)
         { //tutorial
+            TrackerEvent levelStart = new EventLevelStart(2);
+            TrackerInstance.TrackEvent(levelStart);
             respawn.x = 5.5f;
             respawn.y = -18f;
         }
         else if (numLvl == 3)
         { //Nivel 1
-            TrackerEvent levelStart = new EventLevelStart(1);
+            TrackerEvent levelStart = new EventLevelStart(3);
             TrackerInstance.TrackEvent(levelStart);
             respawn.x = 5.59f;
             respawn.y = -37.01f;
         }
         else if (numLvl == 4)
         { //Nivel 2
-            TrackerEvent levelStart = new EventLevelStart(2);
+            TrackerEvent levelStart = new EventLevelStart(4);
             TrackerInstance.TrackEvent(levelStart);
             respawn.x = 7.23f;
             respawn.y = -6f;
         }
         else if (numLvl == 5)
         { //Nivel 3
-            TrackerEvent levelStart = new EventLevelStart(3);
+            TrackerEvent levelStart = new EventLevelStart(5);
             TrackerInstance.TrackEvent(levelStart);
             respawn.x = 3f;
             respawn.y = -42f;
         }
         else if (numLvl == 6)
         { //Nivel 4
-            TrackerEvent levelStart = new EventLevelStart(4);
+            TrackerEvent levelStart = new EventLevelStart(6);
             TrackerInstance.TrackEvent(levelStart);
             respawn.x = 4f;
             respawn.y = -22f;
         }
     }
 
-
-    //GUI-MENUS: INTERACCION CON RATON
+    /// <summary>
+    /// GUI-MENUS: INTERACCION CON RATON
+    /// </summary>
+    
     public void OnJugarClick()
     {
-        Invoke("empiezaJuego", 1f);
-        SM.instance.clickOpcion();
+        Debug.Log("GM.OnJugarClick()");
         TrackerEvent gameStart = new EventSesionStart();
         TrackerInstance.TrackEvent(gameStart);
+        Invoke("empiezaJuego", 1f);
+        SM.instance.clickOpcion();
     }
 
+    //MENU ESC-> SALIR
     public void OnSalirClick()
     {
+        Debug.Log("GM.OnSalirClick()");
+        TrackerEvent sesionEnd = new EventSesionEnd();
+        TrackerInstance.TrackEvent(sesionEnd);
         Application.Quit(); // Salir del programa
     }
 
@@ -482,6 +517,7 @@ public class GM : MonoBehaviour
         SceneManager.LoadScene(7); // Cargar creditos
     }
 
+    //Reinicia el nivel
     public void OnReiniciarClick()
     {
         string nombre = SceneManager.GetActiveScene().name;
@@ -490,8 +526,11 @@ public class GM : MonoBehaviour
 
     }
 
+    //Sale del nivel y devuelve el jugador al selector de niveles (biblioteca)
     public void OnBibliotecaClick()
     {
+        TrackerEvent levelEnd = new EventLevelEnd(GM.instance.numeroNivel);
+        TrackerInstance.TrackEvent(levelEnd);
         SceneManager.LoadScene(1);
     }
 
@@ -513,13 +552,18 @@ public class GM : MonoBehaviour
 
     }
 
+    //Devuelve a la pantalla de título o portada
     public void OnMenuClick()
     {
+        TrackerEvent levelEnd = new EventLevelEnd(GM.instance.numeroNivel);
+        TrackerInstance.TrackEvent(levelEnd);
         SceneManager.LoadScene(0);
     }
 
     private void empiezaJuego()
     {
+        TrackerEvent sesionStart = new EventSesionStart();
+        TrackerInstance.TrackEvent(sesionStart);
         player.GetComponent<SpriteRenderer>().enabled = true;
         player.GetComponent<Rigidbody2D>().WakeUp();
         SceneManager.LoadScene(1); //Carga el selector de nivel (Biblioteca)
