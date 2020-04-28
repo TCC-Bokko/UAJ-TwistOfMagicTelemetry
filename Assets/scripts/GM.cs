@@ -54,6 +54,11 @@ public class GM : MonoBehaviour
     private string sessionFileExt;  
     private float idleManaTime;     //Tiempo que lleva regenerando mana.
     private float lastCureTime;     //Tiempo desde la última vez que se curo mana
+    //Opcional, track de posición de jugador.
+    public float playerXtrack;
+    public float playerYtrack;
+    public float timeXplayerTrack = 5f;
+    private float lastPlayerTrack;
 
     public int getSession()
     {
@@ -91,7 +96,7 @@ public class GM : MonoBehaviour
         //Inicialización del tracker
         TrackerInstance = Tracker.getInstance();
         idleManaTime = 0.0f;
-        
+        lastPlayerTrack = 0.0f;
 
         //Variables de Juego
         cajaHundida = false;
@@ -279,6 +284,15 @@ public class GM : MonoBehaviour
             if (curando) curandoFin(); //Pone curando a false
         }
         //--------------------------------TRACKER---------------------------
+        lastPlayerTrack += Time.deltaTime;
+        if (lastPlayerTrack > timeXplayerTrack) {
+            //Pillamos posición de jugador
+            playerXtrack = player.transform.position.x;
+            playerXtrack = player.transform.position.y;
+            //Mandamos evento
+            TrackerEvent playerPosTrack = new EventPosition(playerXtrack, playerYtrack);
+            TrackerInstance.TrackEvent(playerPosTrack);
+        }
 
         TrackerInstance.Update();
 
@@ -326,8 +340,11 @@ public class GM : MonoBehaviour
 
     public void curandoFin()
     {
-        TrackerEvent idleMana = new EventIdleMana1(idleManaTime);
-        TrackerInstance.TrackEvent(idleMana);
+        if (idleManaTime > 1.5f) { 
+            TrackerEvent idleMana = new EventIdleMana1(idleManaTime);
+            TrackerInstance.TrackEvent(idleMana);
+        }
+        idleManaTime = 0.0f;
         curando = false;
     }
 
