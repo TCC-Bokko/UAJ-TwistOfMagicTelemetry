@@ -91,7 +91,7 @@ public class GM : MonoBehaviour
         //Inicialización del tracker
         TrackerInstance = Tracker.getInstance();
         idleManaTime = 0.0f;
-        LoadSessionID();
+        
 
         //Variables de Juego
         cajaHundida = false;
@@ -562,6 +562,7 @@ public class GM : MonoBehaviour
 
     private void empiezaJuego()
     {
+        LoadSessionID();
         TrackerEvent sesionStart = new EventSesionStart();
         TrackerInstance.TrackEvent(sesionStart);
         player.GetComponent<SpriteRenderer>().enabled = true;
