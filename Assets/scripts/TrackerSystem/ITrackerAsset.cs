@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ITrackerAsset : MonoBehaviour
+abstract public class ITrackerAsset : MonoBehaviour
 {
     //CLASE ABSTRACTA DE TRACKERS CON LA CUAL IMPLEMENTAR:
     //subTracker levelTracker
@@ -16,7 +16,5 @@ public class ITrackerAsset : MonoBehaviour
         return isValid;
     }
 
-    public bool checkValidity(TrackerEvent t_event) {
-        return true;
-    }
+    abstract public bool checkValidity(TrackerEvent t_event);
 }

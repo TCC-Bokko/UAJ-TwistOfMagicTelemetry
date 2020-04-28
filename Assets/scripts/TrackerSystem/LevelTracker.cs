@@ -12,7 +12,7 @@ public class LevelTracker : ITrackerAsset
     // Se podría separar las colas para trabajar con ellas independientemente, aunque trabajaremos con todos los eventos en la misma
 
 
-    public new bool checkValidity(TrackerEvent t_event)
+    public override bool checkValidity(TrackerEvent t_event)
     {
         bool isValid = false;
         TrackerEvent.EventType t_eventType = t_event.getType();

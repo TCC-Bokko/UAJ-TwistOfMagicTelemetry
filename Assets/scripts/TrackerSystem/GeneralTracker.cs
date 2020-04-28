@@ -19,8 +19,7 @@ public class GeneralTracker : ITrackerAsset
         
     }
 
-    public new bool checkValidity(TrackerEvent t_event)
-    {
+    public override bool checkValidity(TrackerEvent t_event) {
         bool isValid = false;
         TrackerEvent.EventType t_eventType = t_event.getType();
 

@@ -61,9 +61,8 @@ public class Tracker {
 
     public void TrackEvent(TrackerEvent t_event) {
         bool accepted = false;
-        foreach (var tracker in activeTrackers)
-        {
-            if (tracker.accept(t_event))
+        foreach (var tracker in activeTrackers) {
+            if (tracker.checkValidity(t_event))
                 accepted = true;
         }
 
@@ -73,8 +72,7 @@ public class Tracker {
     }
 
     // Update is called once per frame
-    public void Update()
-    {
+    public void Update() {
         //Cada X tiempo o cantidad de eventos...
         if (eventList.Count >= 1) {
             persistenceObject.send(eventList);
