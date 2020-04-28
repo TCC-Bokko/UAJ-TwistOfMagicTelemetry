@@ -16,7 +16,7 @@ public class EventCheckpoint : TrackerEvent
         session = GM.instance.getSession();
         idCheckpoint = n;
     }
-    //Añadir override???
+    
     public override string SerializeToCSV()
     {
         return base.SerializeToCSV() + ", " + idCheckpoint.ToString() + ","+ level.ToString();

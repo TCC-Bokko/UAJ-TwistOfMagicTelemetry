@@ -15,6 +15,7 @@ public class TrackerEvent {
         LEVEL_END,
         LEVEL_COMPLETED,
         LEVEL_RESTART,
+        PLAYER_POSITION,
         DEAD,
         CHECKPOINT,
         IDLE_MANA1,
