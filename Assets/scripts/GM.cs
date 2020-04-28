@@ -497,8 +497,6 @@ public class GM : MonoBehaviour
     public void OnJugarClick()
     {
         Debug.Log("GM.OnJugarClick()");
-        TrackerEvent gameStart = new EventSesionStart();
-        TrackerInstance.TrackEvent(gameStart);
         Invoke("empiezaJuego", 1f);
         SM.instance.clickOpcion();
     }

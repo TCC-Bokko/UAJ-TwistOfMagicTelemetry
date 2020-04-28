@@ -56,7 +56,6 @@ public class Tracker {
     // Init con instanciado
     void Start() { 
         
-        
     }
 
     public void TrackEvent(TrackerEvent t_event) {
