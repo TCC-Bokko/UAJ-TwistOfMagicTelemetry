@@ -76,7 +76,7 @@ public class Movimiento : MonoBehaviour
 		//INPUTS
 		mHorizontal = Input.GetAxis("Horizontal");					//Obtiene el input de movimiento horizontal
 		mVertical = Input.GetAxis("Vertical");						//Obtiene el input de movimiento vertical
-		if (Input.GetButton("Jump"))
+		if (Input.GetButtonDown("Jump"))
 		{
 			salto = true;											//Obtiene el input de salto, llama al invoke porque con GetButtonDown a veces pasaba a false antes de hacer el salto.
 
