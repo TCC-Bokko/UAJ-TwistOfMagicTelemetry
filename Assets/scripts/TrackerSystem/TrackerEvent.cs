@@ -47,6 +47,8 @@ public class TrackerEvent {
     {
         this.session = s;
     }
+    public long getSession() { return session; }
+    public DateTime getTime() { return time; }
     public virtual string SerializeToCSV()
     {
         return time.ToString() + "," + session.ToString() + "," + eventType.ToString();

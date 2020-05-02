@@ -21,5 +21,5 @@ public class EventLevelEnd : TrackerEvent
     {
         return base.SerializeToJson() + " Level: " + "\"" + this.level + "\"" + ",\n";
     }
-
+    public int getLevel() { return level; }
 }

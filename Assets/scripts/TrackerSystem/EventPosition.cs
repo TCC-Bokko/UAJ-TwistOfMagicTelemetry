@@ -26,6 +26,11 @@ public class EventPosition : TrackerEvent
         return base.SerializeToJson() + " PosX: " + "\"" + posX + "\"" + ",\n" +
             " PosY: " + "\"" + posY + "\"" + ",\n" ;
     }
-
-
+    public float getY() {
+        return posY;
+    }
+    public float getX()
+    {
+        return posX;
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
 public class BinarySerializer : ISerializer
 {
     string folderName = "/PersistentData/session_";
@@ -12,6 +13,15 @@ public class BinarySerializer : ISerializer
     //Aqui tengo que cerrrar lo que viene a ser el archivo json
     // Update is called once per frame
 
+    [Serializable]
+    struct BinnaryEvent {
+        public TrackerEvent.EventType type;
+        public DateTime timeStamp;
+        public long IDSesion;
+        public int nivel;
+        public double posX;
+        public double posY;
+    }
     public BinarySerializer()
     {
 
@@ -33,6 +43,39 @@ public class BinarySerializer : ISerializer
     public override bool persistance(string eventTrace, TrackerEvent tE)
     {
         sessionIndex = GM.instance.getSession();
+        BinnaryEvent aux = new BinnaryEvent();
+        aux.IDSesion = tE.getSession();
+        aux.type = tE.getType();
+        aux.timeStamp = tE.getTime();
+        switch (tE.getType()) {
+            case TrackerEvent.EventType.SESSION_START:
+                aux.nivel = -1;
+                aux.posX = 0;
+                aux.posY = 0;
+                break;
+            case TrackerEvent.EventType.LEVEL_START:
+                aux.nivel = (tE as EventLevelStart).getLevel();
+                aux.posX = 0;
+                aux.posY = 0;
+                break;
+            case TrackerEvent.EventType.LEVEL_END:
+                aux.nivel = (tE as EventLevelStart).getLevel();
+                aux.posX = 0;
+                aux.posY = 0;
+                break;
+            case TrackerEvent.EventType.LEVEL_COMPLETED:
+                aux.nivel = (tE as EventLevelStart).getLevel();
+                aux.posX = 0;
+                aux.posY = 0;
+                break;
+            case TrackerEvent.EventType.PLAYER_POSITION:
+                aux.posX = (tE as EventPosition).getX();
+                aux.posY = (tE as EventPosition).getY();
+                aux.nivel = -1;
+                break;
+            default:
+                break;
+        }
         bool result = false;
         string fullpath = Application.dataPath + folderName + sessionIndex + extension;
         if (!File.Exists(fullpath))
@@ -41,7 +84,7 @@ public class BinarySerializer : ISerializer
         }
         FileStream f = File.Open(fullpath, FileMode.Append);
         BinaryFormatter formater = new BinaryFormatter();
-        formater.Serialize(f, tE);
+        formater.Serialize(f, aux);
         f.Close();
         return result;
     }
