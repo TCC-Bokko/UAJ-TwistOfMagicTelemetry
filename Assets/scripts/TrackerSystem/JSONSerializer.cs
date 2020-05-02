@@ -20,14 +20,9 @@ public class JSONSerializer : ISerializer {
 
     }
 
-    public override string serialize(TrackerEvent tE) {
-        //string j = JsonUtility.ToJson(tE);
- ////////////////////
- //CAMBIAR
- //Solo pilla el del padre macho k tonto soy
-
-/////////////////       
-        string j = tE.SerializeToJson() +  "}"  + "\n";
+    public override string serialize(TrackerEvent tE)
+    {
+        string j = tE.SerializeToJson() + "}" + "\n";
         Debug.Log(j);
         persistance(j);
         return j;

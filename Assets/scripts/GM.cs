@@ -437,10 +437,7 @@ public class GM : MonoBehaviour
         player.GetComponent<Animator>().SetBool("muerto", true);                    //Activar animación desmayarse.
         SM.instance.muerte();
         Invoke("Respawn", 2);
-        //----------------------------------------------------------------------------------
-        /*TrackerEvent muerte = new EventPlayerDead(3,4,TrackerEvent.causeOfDeath.BY_MANA);
-        TrackerInstance.TrackEvent(muerte);
-        */
+     
     }
 
     //GESTION DEL RESPAWN DEL PERSONAJE

@@ -11,7 +11,7 @@ class EventSesionStart : TrackerEvent
     }
     public override string SerializeToCSV()
     {
-        return base.SerializeToCSV() + ",\n";
+        return base.SerializeToCSV();
 
     }
     public override string SerializeToJson()
