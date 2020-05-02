@@ -7,7 +7,7 @@ public class IPersistence {
     private CircularBuffer<TrackerEvent> eventList;
     private int queueSize;
     private ISerializer serializeObject;
-    private bool serializeType = true; // Cambiar a int en caso de agregar mas serializadores
+    private bool serializeType = false; // Cambiar a int en caso de agregar mas serializadores
     public IPersistence() {
         //Tamaño máximo de cola circular
         queueSize = 100;

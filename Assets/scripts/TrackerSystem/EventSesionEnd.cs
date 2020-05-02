@@ -8,8 +8,7 @@ public class EventSesionEnd : TrackerEvent
 
     public EventSesionEnd() : base(DateTime.Now, EventType.SESSION_END)
     {
-
-
+        session = GM.instance.getSession();
     }
     public override string SerializeToCSV()
     {
@@ -18,7 +17,7 @@ public class EventSesionEnd : TrackerEvent
     }
     public override string SerializeToJson()
     {
-        return base.SerializeToJson() + "\"" + "\n";
+        return base.SerializeToJson();
     }
 
 

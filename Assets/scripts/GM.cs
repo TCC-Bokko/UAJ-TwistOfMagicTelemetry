@@ -90,7 +90,7 @@ public class GM : MonoBehaviour
 
     //--------------------------
 
-    //public GameObject[] Glifos;			//Array de glifos, mover aqui todos los que existan en escena para que sean manejados.
+    //Array de glifos, mover aqui todos los que existan en escena para que sean manejados.
     private void Awake()
     { 
     }
@@ -293,8 +293,7 @@ public class GM : MonoBehaviour
             //Pillamos posición de jugador
             playerXtrack = player.transform.position.x;
             playerYtrack = player.transform.position.y;
-            if (startPlay)
-            {
+            if (startPlay) {
                 //Mandamos evento
                 TrackerEvent playerPosTrack = new EventPosition(playerXtrack, playerYtrack);
                 TrackerInstance.TrackEvent(playerPosTrack);
@@ -471,7 +470,6 @@ public class GM : MonoBehaviour
         if (!startPlay)
         {
             LoadSessionID();
-            //instance.
             TrackerEvent sesionStart = new EventSesionStart();
             TrackerInstance.TrackEvent(sesionStart);
             startPlay = true;
@@ -538,7 +536,14 @@ public class GM : MonoBehaviour
         Debug.Log("GM.OnSalirClick()");
         TrackerEvent sesionEnd = new EventSesionEnd();
         TrackerInstance.TrackEvent(sesionEnd);
-        Application.Quit(); // Salir del programa
+
+        //Salir del juego
+        #if UNITY_EDITOR
+            // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 
     public void OnCreditosClick()
