@@ -30,7 +30,6 @@ public class Tracker {
 
         // Enlazado de otras clases segun tipo
         persistenceObject = new IPersistence();
-
         // Llenar lista de trackers
         ITrackerAsset trackerNivel = new LevelTracker();
         activeTrackers.Add(trackerNivel);
@@ -78,5 +77,8 @@ public class Tracker {
             eventList.Clear();
             persistenceObject.Update();
         }
+    }
+    public IPersistence GetPersistence() {
+        return persistenceObject;
     }
 }

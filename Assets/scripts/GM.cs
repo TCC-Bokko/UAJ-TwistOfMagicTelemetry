@@ -53,7 +53,7 @@ public class GM : MonoBehaviour
     private float idleManaTime;     //Tiempo que lleva regenerando mana.
     private float lastCureTime;     //Tiempo desde la última vez que se curo mana
     public enum serializacion { CSV, JSON, Binario }
-    public serializacion Tipo_Serialización;
+    public serializacion Tipo_Serialización = serializacion.JSON;
     //Opcional, track de posición de jugador.
     public float playerXtrack;
     public float playerYtrack;
@@ -100,6 +100,7 @@ public class GM : MonoBehaviour
     {
         //Inicialización del tracker
         TrackerInstance = Tracker.getInstance();
+        TrackerInstance.GetPersistence().setSerialize(Tipo_Serialización);
         idleManaTime = 0.0f;
         lastPlayerTrack = 0.0f;
 

@@ -1,3 +1,4 @@
+
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,26 +8,19 @@ public class IPersistence {
     private CircularBuffer<TrackerEvent> eventList;
     private int queueSize;
     private ISerializer serializeObject;
-    private bool serializeType = false; // Cambiar a int en caso de agregar mas serializadores
+    private GM.serializacion serializeType= GM.serializacion.JSON; // Cambiar a int en caso de agregar mas serializadores
     public IPersistence() {
         //Tamaño máximo de cola circular
         queueSize = 100;
         //Establecer aqui que tipo de serializador usar
         eventList = new CircularBuffer<TrackerEvent>(queueSize);
-        if (!serializeType)
-        {
-            serializeObject = new JSONSerializer();
-        }
-        else
-        {
-            serializeObject = new CSVSerializer();
-        }
+       
         //serializeObject = new CSVSerializer();
     }
 
     // Start is called before the first frame update
     void Start() {
-        
+        setSerialize(serializeType);
     }
 
     // Update is called once per frame
@@ -54,7 +48,26 @@ public class IPersistence {
             eventList.Add(t_event);
         }
     }
-
+    public void setSerialize(GM.serializacion index) {
+        ISerializer newSerial;
+        switch (index)
+        {
+            case GM.serializacion.JSON:
+                newSerial = new JSONSerializer();
+                break;
+            case GM.serializacion.CSV:
+                newSerial = new CSVSerializer();
+                break;
+            case GM.serializacion.Binario:
+                newSerial = new BinarySerializer();
+                break;
+            default:
+                newSerial = new JSONSerializer();
+                Debug.Log("Error en el formato de serializador. Se presupone JSON");
+                break;
+        }
+        serializeObject = newSerial;
+    }
 }
 
 public class CircularBuffer<T>
