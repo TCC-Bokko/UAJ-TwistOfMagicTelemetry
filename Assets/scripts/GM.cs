@@ -52,6 +52,8 @@ public class GM : MonoBehaviour
     private string sessionFileExt;  
     private float idleManaTime;     //Tiempo que lleva regenerando mana.
     private float lastCureTime;     //Tiempo desde la última vez que se curo mana
+    public enum serializacion { CSV, JSON, Binario }
+    public serializacion Tipo_Serialización;
     //Opcional, track de posición de jugador.
     public float playerXtrack;
     public float playerYtrack;
