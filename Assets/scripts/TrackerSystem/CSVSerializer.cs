@@ -25,10 +25,10 @@ public class CSVSerializer : ISerializer
         //string j = JsonUtility.ToJson(tE);
         string j = tE.SerializeToCSV() + "\n";
         Debug.Log(j);
-        persistance(j);
+        persistance(j, tE);
         return j;
     }
-    public override bool persistance(string eventTrace)
+    public override bool persistance(string eventTrace, TrackerEvent tE)
     {
         sessionID = GM.instance.getSession();
         bool result = false;

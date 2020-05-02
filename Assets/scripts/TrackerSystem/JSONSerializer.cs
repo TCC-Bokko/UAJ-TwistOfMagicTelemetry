@@ -24,10 +24,10 @@ public class JSONSerializer : ISerializer {
     {
         string j = tE.SerializeToJson() + "}" + "\n";
         Debug.Log(j);
-        persistance(j);
+        persistance(j, tE);
         return j;
     }
-    public override bool persistance(string eventTrace)
+    public override bool persistance(string eventTrace, TrackerEvent tE)
     {
         sessionIndex = GM.instance.getSession();
         bool result = false;
