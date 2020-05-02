@@ -8,6 +8,7 @@ class EventSesionStart : TrackerEvent
     public EventSesionStart() : base(DateTime.Now, EventType.SESSION_START)
     {
         session = GM.instance.getSession();
+        //session = GM.getSession()
     }
     public override string SerializeToCSV()
     {

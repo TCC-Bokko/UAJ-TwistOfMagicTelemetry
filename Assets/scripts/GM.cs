@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.IO;
 using UnityEngine.SceneManagement;
-
-
 
 public class GM : MonoBehaviour
 {
@@ -48,8 +45,9 @@ public class GM : MonoBehaviour
     public static float time;
     string textotiempo;
     public int numeroNivel;
-    private int sessionID = 0;
+    private static int sessionID = 0;
     //-----------TRACKER---------------
+    bool startPlay = false;
     public static Tracker TrackerInstance;
     private string sessionFileExt;  
     private float idleManaTime;     //Tiempo que lleva regenerando mana.
@@ -65,7 +63,12 @@ public class GM : MonoBehaviour
         return sessionID;
     }
 
-    public void LoadSessionID() { //    IMPORTANTISIMO--> Se llama dos veces por sesion ahora mismo, ya que el GM se inicializa de nuevo en el paso entre escenas.
+    public void setSession(int s)
+    {
+        sessionID = s;
+    }
+
+    public void LoadSessionID() { 
         string fullpath = Application.dataPath + "/Sessionlocator.txt";
         if (!File.Exists(fullpath))
         {
@@ -75,6 +78,7 @@ public class GM : MonoBehaviour
         {
             StreamReader r = new StreamReader(fullpath);
             sessionID = int.Parse(r.ReadLine());
+            instance.setSession(sessionID);
             r.Close();
         }
         File.WriteAllText(fullpath, "");
@@ -88,8 +92,7 @@ public class GM : MonoBehaviour
 
     //public GameObject[] Glifos;			//Array de glifos, mover aqui todos los que existan en escena para que sean manejados.
     private void Awake()
-    {
-        
+    { 
     }
     void Start()
     {
@@ -105,7 +108,6 @@ public class GM : MonoBehaviour
         tiempo = 0;
         rb = player.GetComponent<Rigidbody2D>();
         mana = manamax;
-        instance = this;
         waterWalkActivo = false;
         telequinesisActivo = false;
         herido = false;
@@ -148,6 +150,8 @@ public class GM : MonoBehaviour
             respawn.x = 1.5f;
             respawn.y = -22f;
         }
+
+        instance = this;
     }
 
     void Update()
@@ -289,9 +293,12 @@ public class GM : MonoBehaviour
             //Pillamos posición de jugador
             playerXtrack = player.transform.position.x;
             playerYtrack = player.transform.position.y;
-            //Mandamos evento
-            TrackerEvent playerPosTrack = new EventPosition(playerXtrack, playerYtrack);
-            TrackerInstance.TrackEvent(playerPosTrack);
+            if (startPlay)
+            {
+                //Mandamos evento
+                TrackerEvent playerPosTrack = new EventPosition(playerXtrack, playerYtrack);
+                TrackerInstance.TrackEvent(playerPosTrack);
+            }
             lastPlayerTrack = 0.0f;
         }
 
@@ -461,6 +468,14 @@ public class GM : MonoBehaviour
     void OnLevelWasLoaded(int numLvl)
     {  //Cuando se acaba de cargar un nivel, recolocar el respawn
         numeroNivel = numLvl;
+        if (!startPlay)
+        {
+            LoadSessionID();
+            //instance.
+            TrackerEvent sesionStart = new EventSesionStart();
+            TrackerInstance.TrackEvent(sesionStart);
+            startPlay = true;
+        }
         if (numLvl == 1)
         { //biblioteca
             TrackerEvent levelStart = new EventLevelStart(1);
@@ -512,6 +527,7 @@ public class GM : MonoBehaviour
     public void OnJugarClick()
     {
         Debug.Log("GM.OnJugarClick()");
+        //LoadSessionID();
         Invoke("empiezaJuego", 1f);
         SM.instance.clickOpcion();
     }
@@ -575,9 +591,6 @@ public class GM : MonoBehaviour
 
     private void empiezaJuego()
     {
-        LoadSessionID();
-        TrackerEvent sesionStart = new EventSesionStart();
-        TrackerInstance.TrackEvent(sesionStart);
         player.GetComponent<SpriteRenderer>().enabled = true;
         player.GetComponent<Rigidbody2D>().WakeUp();
         SceneManager.LoadScene(1); //Carga el selector de nivel (Biblioteca)

@@ -30,7 +30,6 @@ public class CSVSerializer : ISerializer
     }
     public override bool persistance(string eventTrace)
     {
-
         sessionID = GM.instance.getSession();
         bool result = false;
         string fullpath = Application.dataPath + folderName +filename+ sessionID + extension;
