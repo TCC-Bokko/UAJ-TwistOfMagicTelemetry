@@ -19,6 +19,7 @@ public class BinarySerializer : ISerializer
         public DateTime timeStamp;
         public long IDSesion;
         public int nivel;
+        public int checkPoint;
         public double posX;
         public double posY;
     }
@@ -52,26 +53,48 @@ public class BinarySerializer : ISerializer
                 aux.nivel = -1;
                 aux.posX = 0;
                 aux.posY = 0;
+                aux.checkPoint = -1;
                 break;
             case TrackerEvent.EventType.LEVEL_START:
                 aux.nivel = (tE as EventLevelStart).getLevel();
                 aux.posX = 0;
                 aux.posY = 0;
+                aux.checkPoint = -1;
                 break;
             case TrackerEvent.EventType.LEVEL_END:
                 aux.nivel = (tE as EventLevelStart).getLevel();
                 aux.posX = 0;
                 aux.posY = 0;
+                aux.checkPoint = -1;
                 break;
             case TrackerEvent.EventType.LEVEL_COMPLETED:
                 aux.nivel = (tE as EventLevelStart).getLevel();
                 aux.posX = 0;
                 aux.posY = 0;
+                aux.checkPoint = -1;
                 break;
             case TrackerEvent.EventType.PLAYER_POSITION:
                 aux.posX = (tE as EventPosition).getX();
                 aux.posY = (tE as EventPosition).getY();
                 aux.nivel = -1;
+                break;
+            case TrackerEvent.EventType.SESSION_END:
+                aux.nivel = -1;
+                aux.posX = 0;
+                aux.posY = 0;
+                aux.checkPoint = -1;
+                break;
+            case TrackerEvent.EventType.DEAD:
+                aux.posX = (tE as EventPosition).getX();
+                aux.posY = (tE as EventPosition).getY();
+                aux.nivel = -1;
+                aux.checkPoint = -1;
+                break;
+            case TrackerEvent.EventType.CHECKPOINT:
+                aux.posX = 0;
+                aux.posY = 0;
+                aux.checkPoint = (tE as EventCheckpoint).getCheckPoint();
+                aux.nivel = (tE as EventCheckpoint).getLevel();
                 break;
             default:
                 break;

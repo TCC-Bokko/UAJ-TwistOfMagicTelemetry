@@ -14,14 +14,10 @@ public class TrackerEvent {
         LEVEL_START,
         LEVEL_END,
         LEVEL_COMPLETED,
-        LEVEL_RESTART,
         PLAYER_POSITION,
         DEAD,
         CHECKPOINT,
-        IDLE_MANA1,
-        IDLE_MANA2,
-        IDLE_MANA3,
-        IDLE_MANA4
+        IDLE_MANA1
     }
     public enum causeOfDeath
     {

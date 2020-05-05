@@ -19,6 +19,7 @@ TagManager:
   - Volador
   - MuerteCaja
   - Nivel
+  - Canvas
   layers:
   - Default
   - TransparentFX

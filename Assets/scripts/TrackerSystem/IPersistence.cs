@@ -8,7 +8,7 @@ public class IPersistence {
     private CircularBuffer<TrackerEvent> eventList;
     private int queueSize;
     private ISerializer serializeObject;
-    private GM.serializacion serializeType= GM.serializacion.Binario; // Cambiar a int en caso de agregar mas serializadores
+
     public IPersistence() {
         //Tamaño máximo de cola circular
         queueSize = 100;
@@ -20,7 +20,6 @@ public class IPersistence {
 
     // Start is called before the first frame update
     void Start() {
-        setSerialize(serializeType);
     }
 
     // Update is called once per frame
@@ -62,7 +61,7 @@ public class IPersistence {
                 newSerial = new BinarySerializer();
                 break;
             default:
-                newSerial = new JSONSerializer();
+                newSerial = new CSVSerializer();
                 Debug.Log("Error en el formato de serializador. Se presupone JSON");
                 break;
         }

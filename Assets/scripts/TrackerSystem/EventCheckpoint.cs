@@ -24,7 +24,9 @@ public class EventCheckpoint : TrackerEvent
     }
     public override string SerializeToJson()
     {
-        return  base.SerializeToJson() + " IdCheckPoint: " + "\"" + idCheckpoint + "\"" + 
-            "NºNivel: "+ "\"" + level+ "\"" + ",\n";
+        return  base.SerializeToJson()+ " IDCheckPoint: " + "\"" + idCheckpoint + "\"" + ",\n" +
+           " NºNivel: " + "\"" + level + "\"" + ",\n";
     }
+    public int getLevel() { return level; }
+    public int getCheckPoint() { return idCheckpoint; }
 }

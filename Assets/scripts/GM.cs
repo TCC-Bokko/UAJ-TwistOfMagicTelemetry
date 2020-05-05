@@ -53,7 +53,7 @@ public class GM : MonoBehaviour
     private float idleManaTime;     //Tiempo que lleva regenerando mana.
     private float lastCureTime;     //Tiempo desde la última vez que se curo mana
     public enum serializacion { CSV, JSON, Binario }
-    public serializacion Tipo_Serialización = serializacion.Binario;
+    private serializacion Tipo_Serialización = serializacion.JSON; ///---> Cambiar para el tipo de Serializacion.
     //Opcional, track de posición de jugador.
     public float playerXtrack;
     public float playerYtrack;
@@ -94,14 +94,16 @@ public class GM : MonoBehaviour
 
     //Array de glifos, mover aqui todos los que existan en escena para que sean manejados.
     private void Awake()
-    { 
+    {
+        DontDestroyOnLoad(this);
     }
     void Start()
     {
         //Inicialización del tracker
-        Tipo_Serialización = serializacion.CSV;
         TrackerInstance = Tracker.getInstance();
         TrackerInstance.GetPersistence().setSerialize(Tipo_Serialización);
+
+
         idleManaTime = 0.0f;
         lastPlayerTrack = 0.0f;
 
@@ -156,6 +158,7 @@ public class GM : MonoBehaviour
         }
 
         instance = this;
+
     }
 
     void Update()
@@ -473,9 +476,6 @@ public class GM : MonoBehaviour
         numeroNivel = numLvl;
         if (!startPlay)
         {
-            LoadSessionID();
-            TrackerEvent sesionStart = new EventSesionStart();
-            TrackerInstance.TrackEvent(sesionStart);
             startPlay = true;
         }
         if (numLvl == 1)
@@ -520,6 +520,10 @@ public class GM : MonoBehaviour
             respawn.x = 4f;
             respawn.y = -22f;
         }
+        player = GameObject.FindGameObjectWithTag("Player");
+        gemas = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).gameObject;
+        migImagen = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(2).gameObject;
+
     }
 
     /// <summary>
@@ -529,7 +533,9 @@ public class GM : MonoBehaviour
     public void OnJugarClick()
     {
         Debug.Log("GM.OnJugarClick()");
-        //LoadSessionID();
+        LoadSessionID();
+        TrackerEvent sesionStart = new EventSesionStart();
+        TrackerInstance.TrackEvent(sesionStart);
         Invoke("empiezaJuego", 1f);
         SM.instance.clickOpcion();
     }
@@ -540,11 +546,11 @@ public class GM : MonoBehaviour
         Debug.Log("GM.OnSalirClick()");
         TrackerEvent sesionEnd = new EventSesionEnd();
         TrackerInstance.TrackEvent(sesionEnd);
-
+        TrackerInstance.GetPersistence().Update();
         //Salir del juego
-        #if UNITY_EDITOR
-            // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-            UnityEditor.EditorApplication.isPlaying = false;
+#if UNITY_EDITOR
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+        UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
@@ -604,5 +610,4 @@ public class GM : MonoBehaviour
         player.GetComponent<Rigidbody2D>().WakeUp();
         SceneManager.LoadScene(1); //Carga el selector de nivel (Biblioteca)
     }
-
 }
