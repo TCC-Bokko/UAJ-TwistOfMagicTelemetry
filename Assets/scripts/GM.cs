@@ -10,7 +10,7 @@ public class GM : MonoBehaviour
     public GameObject migImagen;
     private GameObject nivel;
     private Rigidbody2D rb;
-    private Animator animGemas;
+    public Animator animGemas;
     public Vector2 respawn;             //Lugar donde respawneara el jugador tras morir, normalmente el último portal atravesado.
     public Vector2 inicioNivel;         //Lugar donde el jugador debe empezar el nivel (Para recargar), quiza innecesario si usamos reload
     private int[] actglif;              //Array que guarda en cada posición la cantidad de antorchas necesarias a activar para activar el glifo correspondiente de Glifos[]
@@ -520,10 +520,12 @@ public class GM : MonoBehaviour
             respawn.x = 4f;
             respawn.y = -22f;
         }
+
         player = GameObject.FindGameObjectWithTag("Player");
         gemas = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(0).gameObject;
+        animGemas = gemas.GetComponent<Animator>();
         migImagen = GameObject.FindGameObjectWithTag("Canvas").transform.GetChild(2).gameObject;
-
+       
     }
 
     /// <summary>

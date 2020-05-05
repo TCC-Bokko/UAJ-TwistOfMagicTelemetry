@@ -75511,6 +75511,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: f
       objectReference: {fileID: 0}
+    - target: {fileID: 148760, guid: ad7ed93c9e0adf74d9eec75e1228da53, type: 3}
+      propertyPath: m_TagString
+      value: Canvas
+      objectReference: {fileID: 0}
     - target: {fileID: 150256, guid: ad7ed93c9e0adf74d9eec75e1228da53, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -75533,11 +75537,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22445548, guid: ad7ed93c9e0adf74d9eec75e1228da53, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1.2999992
+      value: 1.300003
       objectReference: {fileID: 0}
     - target: {fileID: 22445548, guid: ad7ed93c9e0adf74d9eec75e1228da53, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.099998474
+      objectReference: {fileID: 0}
+    - target: {fileID: 22459142, guid: ad7ed93c9e0adf74d9eec75e1228da53, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.15879822
+      objectReference: {fileID: 0}
+    - target: {fileID: 22459142, guid: ad7ed93c9e0adf74d9eec75e1228da53, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.79994965
       objectReference: {fileID: 0}
     - target: {fileID: 22461402, guid: ad7ed93c9e0adf74d9eec75e1228da53, type: 3}
       propertyPath: m_AnchoredPosition.y
