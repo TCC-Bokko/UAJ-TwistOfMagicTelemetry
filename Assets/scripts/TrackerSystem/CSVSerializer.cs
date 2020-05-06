@@ -30,6 +30,11 @@ public class CSVSerializer : ISerializer
     }
     public override bool persistance(string eventTrace, TrackerEvent tE)
     {
+        string directory = Application.dataPath + "/PersistentData/";
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
         sessionID = GM.instance.getSession();
         bool result = false;
         string fullpath = Application.dataPath + folderName +filename+ sessionID + extension;

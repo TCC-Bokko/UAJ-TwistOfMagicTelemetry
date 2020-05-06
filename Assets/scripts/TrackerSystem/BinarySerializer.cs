@@ -10,6 +10,7 @@ public class BinarySerializer : ISerializer
     int sessionIndex;
     string extension = ".dat";
     int iterPlace = 0;
+    
     //Aqui tengo que cerrrar lo que viene a ser el archivo json
     // Update is called once per frame
 
@@ -98,6 +99,10 @@ public class BinarySerializer : ISerializer
                 break;
             default:
                 break;
+        }
+        string directory = Application.dataPath + "/PersistentData/";
+        if (!Directory.Exists(directory)) {
+            Directory.CreateDirectory(directory);
         }
         bool result = false;
         string fullpath = Application.dataPath + folderName + sessionIndex + extension;

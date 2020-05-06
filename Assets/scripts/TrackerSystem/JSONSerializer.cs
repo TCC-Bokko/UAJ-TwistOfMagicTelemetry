@@ -29,6 +29,11 @@ public class JSONSerializer : ISerializer {
     }
     public override bool persistance(string eventTrace, TrackerEvent tE)
     {
+        string directory = Application.dataPath + "/PersistentData/";
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
         sessionIndex = GM.instance.getSession();
         bool result = false;
         string fullpath = Application.dataPath+folderName+sessionIndex+extension;
