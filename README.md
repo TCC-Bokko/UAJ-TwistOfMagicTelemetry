@@ -17,7 +17,6 @@ Curso 2019-2020
 
 # Desarrolladores
 Antonio Cardona Costa
-Carlos Gonzalez Martinez
 Daniel Lopez Acero
 Antonio Luis Suarez Solis
 Andres Puente Rodriguez
